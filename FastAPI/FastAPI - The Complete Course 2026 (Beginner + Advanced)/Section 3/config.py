@@ -1,0 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv(".dev.env")
+
+SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
+ALGORITHM = os.getenv("ALGORITHM")
+SECRET_KEY = os.getenv("SECRET_KEY")
