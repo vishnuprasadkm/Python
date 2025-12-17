@@ -43,9 +43,11 @@
 # Alembic
 
 ## Commands
-    | Alembic Command               | Details                               |
-    -------------------------------------------------------------------------
-    | `alembic init <folder name>` | initializes a new, generic environment |
-    | `alembic revision -m <message>` | creates a new revision of the environment |
-    | `alembic update <revision #> ` | Runs our upgrade migration to our database |
-    | `alembic downgrade -1`        | Runs our downgrade migration to our database |
+
+| Alembic Command                  | Details                                         |
+|----------------------------------|-------------------------------------------------|
+| `alembic init <folder name>`     | Initializes a new, generic environment          |
+| `alembic revision -m <message>`  | Creates a new revision of the environment       |
+| `alembic update <revision #>`    | Runs our upgrade migration to the database      |
+| `alembic downgrade -1`           | Runs our downgrade migration to the database    |
+
