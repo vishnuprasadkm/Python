@@ -50,4 +50,3 @@
 | `alembic revision -m <message>`  | Creates a new revision of the environment       |
 | `alembic update <revision #>`    | Runs our upgrade migration to the database      |
 | `alembic downgrade -1`           | Runs our downgrade migration to the database    |
-
