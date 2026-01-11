@@ -182,4 +182,3 @@ async def delete_book_by_id(
 
     if not book_deleted:
         raise HTTPException(status_code=404, detail=f"No such book with id {id} found")
-      
