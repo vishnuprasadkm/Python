@@ -26,7 +26,7 @@ class CreateUserRequest(BaseModel):
     first_name: str = Field(min_length=3)
     last_name: str = Field(min_length=3)
     password: str
-    role: str = Field(default="user")
+    # role: str = Field(default="user")
 
 
 class Token(BaseModel):
