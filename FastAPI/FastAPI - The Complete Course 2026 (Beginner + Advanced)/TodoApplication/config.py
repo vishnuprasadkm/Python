@@ -5,5 +5,6 @@ from dotenv import load_dotenv
 load_dotenv(".prod.env")
 
 SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
+MYSQL_DATABASE_URL = os.getenv("MYSQL_DATABASE_URL")
 ALGORITHM = os.getenv("ALGORITHM")
 SECRET_KEY = os.getenv("SECRET_KEY")

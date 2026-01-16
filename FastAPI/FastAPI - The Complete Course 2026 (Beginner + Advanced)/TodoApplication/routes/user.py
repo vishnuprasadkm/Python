@@ -3,14 +3,13 @@ from starlette import status
 from pydantic import BaseModel
 
 from passlib.context import CryptContext
-import bcrypt
 
 from util.util import db_dependency, user_dependency
 from models import Users
 
 router = APIRouter(prefix="/user", tags=["user"])
 
-bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+argon2_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 
 class ChangePasswordRequest(BaseModel):
@@ -56,13 +55,13 @@ async def change_password(
             detail="New password can't match the old password",
         )
 
-    if not bcrypt_context.verify(new_pass.password, req_user.crypt_password):
+    if not argon2_context.verify(new_pass.password, req_user.crypt_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Old password does not match, please re verify",
         )
 
-    req_user.crypt_password = bcrypt_context.hash(new_pass.new_password)
+    req_user.crypt_password = argon2_context.hash(new_pass.new_password)
     db.add(req_user)
     db.commit()
 

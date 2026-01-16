@@ -8,6 +8,7 @@ from datetime import timedelta, timezone, datetime
 from jose import jwt
 from sqlalchemy.exc import IntegrityError
 from fastapi.security import OAuth2PasswordRequestForm
+import hashlib
 from passlib.context import CryptContext
 
 from models import Users
@@ -17,7 +18,7 @@ from config import SECRET_KEY, ALGORITHM
 router = APIRouter(prefix="/auth", tags=["auth"])
 # email_pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 
-bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+argon2_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 
 class CreateUserRequest(BaseModel):
@@ -40,7 +41,7 @@ def authenticate_user(username: str, password: str, db):
     if not user:
         return False
 
-    if not bcrypt_context.verify(password, user.crypt_password):
+    if not argon2_context.verify(password, user.crypt_password):
         return False
     return user
 
@@ -59,8 +60,8 @@ async def create_user(db: db_dependency, new_user: CreateUserRequest):
 
     try:
         user_model = new_user.model_dump()
-        hash_password = bcrypt_context.hash(user_model.pop("password"))
-        user_model["crypt_password"] = hash_password
+        user_pass = user_model.pop("password")
+        user_model["crypt_password"] = argon2_context.hash(user_pass)
 
         if user_model.get("role") == "":
             user_model["role"] = "user"

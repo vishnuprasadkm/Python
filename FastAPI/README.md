@@ -8,7 +8,10 @@
             -> python -m venv <env_name>
     # Active the virtual env    
         <!-- fastapienv is the venv name given when creating a venv -->
-            -> <env_name>\Scripts\activate.bat
+            # in bash -> source venv/Scripts/activate
+            # in powershell -> .\venv\Scripts\Activate.ps1
+            # in cmd -> venv\Scripts\activate.bat
+
     # Web server to run fast api
         -> pip install "uvicorn[standard]"
     
