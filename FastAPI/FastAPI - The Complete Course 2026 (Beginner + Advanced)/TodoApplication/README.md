@@ -44,9 +44,15 @@
 
 ## Commands
 
-| Alembic Command                  | Details                                         |
-|----------------------------------|-------------------------------------------------|
-| `alembic init <folder name>`     | Initializes a new, generic environment          |
-| `alembic revision -m <message>`  | Creates a new revision of the environment       |
-| `alembic update <revision #>`    | Runs our upgrade migration to the database      |
-| `alembic downgrade -1`           | Runs our downgrade migration to the database    |
+| Alembic Command                  | Details                                             |
+|----------------------------------|-----------------------------------------------------|
+| `alembic init <folder name>`     | Initializes a new, generic environment              |
+| `alembic revision -m <message>`  | Creates a new revision of the environment           |
+| `alembic update <revision #id>`  | Runs upgrade migration to the database              |
+| `alembic downgrade -1`           | Runs downgrade migration to the database,           |
+|                                  | downgrades the last revision                        |
+
+To remove the alembic history delete the version file and in run a sql query to delete the version or drop the alembic table
+    -> DELETE FROM alembic_version WHERE version_num = (SELECT version_num FROM alembic_version);
+    -> DROP TABLE alembic_version;
+and in terminal run alembic stamp head to rebuild Alembic’s tracking table and set it to “base”.
