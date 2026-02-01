@@ -25,9 +25,13 @@ class CreateUserRequest(BaseModel):
     user_name: str = Field(min_length=5)
     email: str = Field(default="test@mail.com")
     first_name: str = Field(min_length=3)
-    last_name: str = Field(min_length=3)
+    last_name: str = Field(min_length=1)
     password: str
     # role: str = Field(default="user")
+
+    class Config:
+        # allow to allow extra fields, ignore to ignore, forbid to reject extra fields in the request body
+        extra = "allow"
 
 
 class Token(BaseModel):
@@ -66,6 +70,7 @@ async def create_user(db: db_dependency, new_user: CreateUserRequest):
         if user_model.get("role") == "":
             user_model["role"] = "user"
 
+        print(user_model)
         user_model = Users(**user_model)
         db.add(user_model)
         db.commit()

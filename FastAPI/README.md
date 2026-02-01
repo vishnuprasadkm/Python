@@ -1,8 +1,6 @@
 # FastAPI
-
+    # run -> `pip install -r requirements.txt` to install all required packages
 ## Pre-requisite
-    # Install FastApi
-        -> pip install fastapi
     # Create a Virtual environment to run fastAPI
         <!-- fastapienv is a name given to the virtual env(venv), it can be anything -->
             -> python -m venv <env_name>
@@ -11,7 +9,9 @@
             # in bash -> source venv/Scripts/activate
             # in powershell -> .\venv\Scripts\Activate.ps1
             # in cmd -> venv\Scripts\activate.bat
-
+    
+    # Install FastApi
+        -> pip install fastapi
     # Web server to run fast api
         -> pip install "uvicorn[standard]"
     
@@ -22,7 +22,7 @@
     -> uvicorn <FILE_NAME>:<FASTAPI_VARIABLE_NAME> --port <PORT_NUMBER> --reload (in the project root dir) 
     or
     -> uvicorn <FIE_NAME>:<FASTAPI_VARIABLE_NAME> --reload
-    For this project - uvicorn index:app --host 0.0.0.0 --port 8000 --reload
+    For this project - uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
     or with latest fastapi version
     fastapi run <file_name>.py  -> for production mode

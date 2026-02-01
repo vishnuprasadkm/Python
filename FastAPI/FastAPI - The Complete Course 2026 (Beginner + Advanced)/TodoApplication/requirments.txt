@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-jose[cryptography]
+passlib
+python-multipart
+argon2-cffi
+python-dotenv
