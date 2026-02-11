@@ -7,3 +7,4 @@ passlib
 python-multipart
 argon2-cffi
 python-dotenv
+alembic

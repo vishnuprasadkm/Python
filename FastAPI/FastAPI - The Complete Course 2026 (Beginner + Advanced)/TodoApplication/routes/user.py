@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from starlette import status
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
+import re
 
 from passlib.context import CryptContext
 
@@ -15,6 +16,18 @@ argon2_context = CryptContext(schemes=["argon2"], deprecated="auto")
 class ChangePasswordRequest(BaseModel):
     password: str
     new_password: str
+
+
+class changePhoneNumberRequest(BaseModel):
+    phone_number: str
+
+    @field_validator("phone_number")
+    def validate_number(cls, val):
+        if not re.fullmatch(r"^\+?\d+$"):
+            raise ValueError(
+                "Invalid phone number. Only digits and an optional leading '+' are allowed."
+            )
+        return val
 
 
 @router.get("/")
@@ -66,3 +79,35 @@ async def change_password(
     db.commit()
 
     return {"message": "Password changed"}
+
+
+@router.put("/change-phone-number", status_code=status.HTTP_200_OK)
+async def change_phone_number(
+    db: db_dependency, new_phone_number: changePhoneNumberRequest, user: user_dependency
+):
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed!"
+        )
+
+    req_user = db.query(Users).filter(Users.id == user.get("id")).first()
+
+    if req_user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found!"
+        )
+
+    if (
+        len(new_phone_number.phone_number) < 10
+        or len(new_phone_number.phone_number) > 13
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail="Invalid phone number, phone number should be of 10 digits or less than 13 digits if country code is included",
+        )
+    req_user.phone_number = new_phone_number.phone_number
+
+    db.add(req_user)
+    db.commit()
+
+    return {"message": "Phone number updated successfully!"}

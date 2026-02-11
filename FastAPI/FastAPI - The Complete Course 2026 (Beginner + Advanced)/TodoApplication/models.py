@@ -14,7 +14,7 @@ class Users(Base):
     crypt_password = Column(String)
     is_active = Column(Boolean, default=True)
     role = Column(String)
-    # phone_number=Column(String)
+    phone_number=Column(String(10))
 
 
 class Todos(Base):

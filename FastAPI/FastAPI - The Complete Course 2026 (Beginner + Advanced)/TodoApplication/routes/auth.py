@@ -27,7 +27,9 @@ class CreateUserRequest(BaseModel):
     first_name: str = Field(min_length=3)
     last_name: str = Field(min_length=1)
     password: str
-    # role: str = Field(default="user")
+    phone_number: str = Field(min_length=10, max_length=10, default="xxxxxxxxxx")
+    
+    # role: str = Field(default="user")  # role can be given as a additional parameter
 
     class Config:
         # allow to allow extra fields, ignore to ignore, forbid to reject extra fields in the request body
