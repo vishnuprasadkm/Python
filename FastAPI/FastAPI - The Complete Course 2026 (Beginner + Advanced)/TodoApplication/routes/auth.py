@@ -31,7 +31,7 @@ class CreateUserRequest(BaseModel):
     
     # role: str = Field(default="user")  # role can be given as a additional parameter
 
-    class Config:
+    class ConfigDict:   # Config deprecated
         # allow to allow extra fields, ignore to ignore, forbid to reject extra fields in the request body
         extra = "allow"
 

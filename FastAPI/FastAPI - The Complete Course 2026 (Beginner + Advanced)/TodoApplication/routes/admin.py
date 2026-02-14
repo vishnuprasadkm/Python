@@ -28,10 +28,18 @@ async def get_all_admin_users(db: db_dependency, user: user_dependency):
         data = db.query(Users).filter(Users.role == "admin").all()
 
         if data:
+            mod_data = [
+                {
+                    k: v
+                    for k, v in u.__dict__.items()
+                    if k not in ["crypt_password", "_sa_instance_state"]
+                }
+                for u in data
+            ]
             return {
                 "message": "Data Successfully fetched",
                 "length": len(data),
-                "data": data,
+                "data": mod_data,
             }
         raise HTTPException(status_code=404, detail="Data not found!")
     raise HTTPException(status_code=404, detail="Access Denied!")
@@ -43,10 +51,18 @@ async def get_all_users(db: db_dependency, user: user_dependency):
         data = db.query(Users).all()
 
         if data:
+            mod_data = [
+                {
+                    k: v
+                    for k, v in u.__dict__.items()
+                    if k not in ["crypt_password", "_sa_instance_state"]
+                }
+                for u in data
+            ]
             return {
                 "message": "Data Successfully fetched",
                 "length": len(data),
-                "data": data,
+                "data": mod_data,
             }
         raise HTTPException(status_code=404, detail="Data not found!")
     raise HTTPException(status_code=404, detail="Access Denied!")

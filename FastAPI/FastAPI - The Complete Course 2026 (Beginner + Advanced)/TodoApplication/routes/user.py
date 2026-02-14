@@ -23,7 +23,7 @@ class changePhoneNumberRequest(BaseModel):
 
     @field_validator("phone_number")
     def validate_number(cls, val):
-        if not re.fullmatch(r"^\+?\d+$"):
+        if not re.fullmatch(r"^\+?\d+$", val):
             raise ValueError(
                 "Invalid phone number. Only digits and an optional leading '+' are allowed."
             )
@@ -47,7 +47,7 @@ async def get_user_details(db: db_dependency, user: user_dependency):
     }
 
     if mod_data:
-        return {"message": "User Details", "length": len(mod_data), "data": mod_data}
+        return {"message": "User Details", "length": 1, "data": mod_data}
 
 
 @router.put("/change-password", status_code=status.HTTP_200_OK)
@@ -103,7 +103,7 @@ async def change_phone_number(
     ):
         raise HTTPException(
             status_code=status.HTTP_406_NOT_ACCEPTABLE,
-            detail="Invalid phone number, phone number should be of 10 digits or less than 13 digits if country code is included",
+            detail="Phone number must be between 10 and 13 digits (including optional country code).",
         )
     req_user.phone_number = new_phone_number.phone_number
 

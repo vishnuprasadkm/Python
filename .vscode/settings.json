@@ -4,6 +4,8 @@
     "c:\\Users\\HOME\\Desktop\\Code\\Python\\FastAPI\\FastAPI - The Complete Course 2026 (Beginner + Advanced)\\TodoApplication"
   ],
   "cSpell.words": [
+    "autoflush",
+    "poolclass",
     "sessionmaker"
   ]
 }
